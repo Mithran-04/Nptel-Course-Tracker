@@ -1,0 +1,224 @@
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link rel="stylesheet" href="/style.css"> -->
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+
+
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+<style>
+    
+#Fm{
+   position: absolute;  
+   left: 50px;
+}
+#feedback{
+   position: absolute;  
+   left: 500px; 
+}
+.confirm-box{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index:9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.message-box{
+    background: #fff;
+    text-align: center;
+    font-family:16px;
+    font-size:16px;
+    line-height: 1.5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.button-box{
+    margin-top: 30px;
+}
+.yes-button,
+.no-button{
+    padding: 10px 20px;
+    font-size:16px;
+    margin:0 20px;
+    border: none;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+</style>
+    </head>
+    <body>
+         <center><h1>Details Verification</h1></center>
+         <br>
+          <br>
+           
+          
+          <table id="example" class="table table-striped" style="width:100%">
+            <thead> 
+                <tr> 
+                    <th>Register Number</th>
+                    <th>Student Name</th>
+                    <th>Year</th>
+                    <th>Sub.Code</th>
+                    <th>Nptel Course Title</th>
+                    <th>Credits Earned</th>
+                    <th>ActualNptelMarks</th>
+                    <th>SSN Marks</th>
+                    <th>Verify</th>
+                </tr> 
+                </thead> 
+                <tbody> 
+                
+                    {% for row in value %}  
+                        <tr> 
+                            <td>{{row[2]}}</td> 
+                            <td>{{row[3]}}</td> 
+                            <td>{{row[4]}}</td>
+                            <td>{{row[5]}}</td>
+                            <td>{{row[6]}}</td>
+                            <td>{{row[7]}}</td>
+                            <td>{{row[8]}}</td>
+                            <td>{{row[9]}}</td>
+                            <td>
+                                <div class="form-control">
+                                    <input type="checkbox" id="allcb" class="chkbox" onclick="uncheckall()" />
+                                    <label for="allcb" />
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %} 
+                </tbody> 
+             
+            
+        </table>
+        <div align="right">
+            <button class="btn btn-lg btn-success" onclick="showConfirm()">DONE</button>
+        </div>
+        <h4 id="feedback"></h4>
+        <script>
+            var sm=0
+            function showConfirm()
+            {
+                
+                var confirmBox=document.createElement("div");
+                confirmBox.classList.add('confirm-box');
+
+                var messageBox=document.createElement("div");
+                messageBox.classList.add('message-box');
+                messageBox.textContent="Do you want to submit?";
+                confirmBox.appendChild(messageBox);
+
+                var buttonBox=document.createElement("div");
+                buttonBox.classList.add('button-box');
+                messageBox.appendChild(buttonBox);
+
+                var yesButton=document.createElement("button");
+                yesButton.classList.add('yes-button');
+                yesButton.textContent="Yes";
+                buttonBox.appendChild(yesButton);
+                // yesButton.addEventListener('click',yesBtn)
+
+                var noButton=document.createElement("button");
+                noButton.classList.add('no-button');
+                noButton.textContent="No";
+                buttonBox.appendChild(noButton);
+                noButton.addEventListener('click',noBtn)
+              
+
+                function noBtn(){
+                    document.body.removeChild(confirmBox);
+                }
+
+                $(document).ready(function(){
+                            
+                            $(".table table-success table-striped").on('click',function(){
+                                var currentRow=$(this).closest("tr");
+                                var col1=currentRow.find("td:eq(0)").html();
+                                var col2=currentRow.find("td:eq(1)").html();
+                                var col3=currentRow.find("td:eq(2)").html();
+                                var col4=currentRow.find("td:eq(3)").html();
+                                var col5=currentRow.find("td:eq(4)").html();
+                                var col6=currentRow.find("td:eq(5)").html();
+                                var col7=currentRow.find("td:eq(6)").html();
+                                var col8=currentRow.find("td:eq(7)").html();
+                            
+                            });
+                    
+                            $(".yes-button").on('click',function(){
+                                document.body.removeChild(confirmBox);
+                                var aData=[];
+                                sm=0;
+                                $(".table-striped tbody tr").each(function(){
+                                    var currentRow=$(this);
+                                    var col1=currentRow.find("td:eq(0)").html();
+                                    var col2=currentRow.find("td:eq(1)").html();
+                                    var col3=currentRow.find("td:eq(2)").html();
+                                    var col4=currentRow.find("td:eq(3)").html();
+                                    var col5=currentRow.find("td:eq(4)").html();
+                                    var col6=currentRow.find("td:eq(5)").html();
+                                    var col7=currentRow.find("td:eq(6)").html();
+                                    var col8=currentRow.find("td:eq(7)").html();
+                                    var obj={};
+                                    obj.col1=col1;
+                                    obj.col2=col2;
+                                    obj.col3=col3
+                                    obj.col4=col4;
+                                    obj.col5=col5;
+                                    obj.col6=col6;
+                                    obj.col7=col7;
+                                    obj.col8=col8;
+                                    if(currentRow.find(".chkbox").is(":checked")){
+                                    sm+=parseInt(obj.col6)
+                                    aData.push(obj)
+                                    }
+                    
+                                })
+                                
+                                if(sm!=6 && sm!=3)
+                                    {document.getElementById("feedback").innerHTML="Invalid choice!!"
+                                        sm=0}
+                                else if(sm==3 && aData.length>=3){
+                                {
+                                    
+                                    document.getElementById("feedback").innerHTML="Invalid choice!!"
+                                        sm=0}
+                                }
+                                else if(sm==6 && aData.length>=5){
+                                {document.getElementById("feedback").innerHTML="Invalid choice!!"
+                                        sm=0}
+                                }
+                                else{
+                                        $.getJSON('/array2python', {
+                                    wordlist: JSON.stringify(aData)
+                                    }, function(data){
+                                    console.log(data.result)
+                                    $( "#result" ).text(data.result);
+                                })
+                                window.location.pathname = "RetLogin";
+                                }
+                            
+                            });
+                        
+                    });                  
+                    document.body.appendChild(confirmBox);  
+                }
+                
+        </script>
+    </body>
+</html> -->
